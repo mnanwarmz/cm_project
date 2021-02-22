@@ -18,7 +18,7 @@ function Main()
     counter1.finishTime = 0;
     counter2.finishTime = 0;
 
-    
+
 
     if(rngType == 1)
         initialRNG = (RNG(0,c,value));
@@ -39,76 +39,32 @@ function Main()
             customer(i).serviceTime = serviceTime(initialRNG);
             customer(i).serviceEnd = customer(i).arrival + customer(i).serviceTime;
             counter1.finishTime = customer(i).serviceEnd;
-            
+
             else
-                
-                    %Additive Generator
-                    if(rngType == 1)
-                        customer(i).rng = RNG(0,c,customer(i-1).rng);
-                        customer(i).interArrival = interArrival(RNG(0,c,customer(i).rng));
-                        customer(i).serviceTime = serviceTime(RNG(0,c,customer(i).rng));
-                    end
-
-                    %Multiplicative Generator
-                    if(rngType == 2)
-                        customer(i).rng = RNG(a,0,customer(i-1).rng);
-                        customer(i).interArrival = interArrival(RNG(a,0,customer(i).rng));
-                        customer(i).serviceTime = serviceTime(RNG(a,0,customer(i).rng));
-                    end
-
-                    %Mixed Generator
-                    if(rngType == 3)
-                        customer(i).rng = RNG(a,c,customer(i-1).rng);
-                        customer(i).interArrival = interArrival(RNG(a,c,customer(i).rng));
-                        customer(i).serviceTime = serviceTime(RNG(a,c,customer(i).rng));
-                    end
-                    customer(i).arrival = customer(i).interArrival + customer(i-1).arrival;
 
                     if(counter1.finishTime <= counter2.finishTime)
-                        if(customer(i).arrival > counter1.finishTime)
-                            customer(i).serviceBegin =  customer(i).arrival;
-                            customer(i).waitingTime = 0;
-                        else
-                            customer(i).serviceBegin =  counter1.finishTime;
-                            customer(i).waitingTime = customer(i).serviceEnd - customer(i).arrival;
+                        %Additive Generator
+                        if(rngType == 1)
+                            customer(i).rng = RNG(0,c,customer(i-1).rng);
+                            customer(i).interArrival = interArrival(RNG(0,c,customer(i).rng));
+                            customer(i).serviceTime = serviceTime(RNG(0,c,customer(i).rng,1));
                         end
-                            counter1.finishTime = customer(i).serviceTime + customer(i).serviceBegin;
-                            customer(i).serviceEnd = counter1.finishTime;    
-                    else
-                        if(customer(i).arrival > counter2.finishTime)
-                            customer(i).serviceBegin =  customer(i).arrival;
-                            customer(i).waitingTime = 0;
-                        else
-                            customer(i).serviceBegin =  counter2.finishTime;
-                            customer(i).waitingTime = customer(i).serviceEnd - customer(i).arrival;
+
+                        %Multiplicative Generator
+                        if(rngType == 2)
+                            customer(i).rng = RNG(a,0,customer(i-1).rng);
+                            customer(i).interArrival = interArrival(RNG(a,0,customer(i).rng));
+                            customer(i).serviceTime = serviceTime(RNG(a,0,customer(i).rng,1));
                         end
-                            counter2.finishTime = customer(i).serviceTime + customer(i).serviceBegin;
-                            customer(i).serviceEnd = counter2.finishTime;            
-                    end
 
-                    %Additive Generator
-                    if(rngType == 1)
-                        customer(i).rng = RNG(0,c,customer(i-1).rng);
-                        customer(i).interArrival = interArrival(RNG(0,c,customer(i).rng));
-                        customer(i).serviceTime = serviceTime(RNG(0,c,customer(i).rng));
-                    end
+                        %Mixed Generator
+                        if(rngType == 3)
+                            customer(i).rng = RNG(a,c,customer(i-1).rng);
+                            customer(i).interArrival = interArrival(RNG(a,c,customer(i).rng));
+                            customer(i).serviceTime = serviceTime(RNG(a,c,customer(i).rng,1));
+                        end
+                        customer(i).arrival = customer(i).interArrival + customer(i-1).arrival;
 
-                    %Multiplicative Generator
-                    if(rngType == 2)
-                        customer(i).rng = RNG(a,0,customer(i-1).rng);
-                        customer(i).interArrival = interArrival(RNG(a,0,customer(i).rng));
-                        customer(i).serviceTime = serviceTime(RNG(a,0,customer(i).rng));
-                    end
-
-                    %Mixed Generator
-                    if(rngType == 3)
-                        customer(i).rng = RNG(a,c,customer(i-1).rng);
-                        customer(i).interArrival = interArrival(RNG(a,c,customer(i).rng));
-                        customer(i).serviceTime = serviceTime(RNG(a,c,customer(i).rng));
-                    end
-                    customer(i).arrival = customer(i).interArrival + customer(i-1).arrival;
-                    
-                        if(counter1.finishTime <= counter2.finishTime)
                             if(customer(i).arrival > counter1.finishTime)
                                 customer(i).serviceBegin =  customer(i).arrival;
                                 customer(i).waitingTime = 0;
@@ -117,19 +73,40 @@ function Main()
                                 customer(i).waitingTime = customer(i).serviceEnd - customer(i).arrival;
                             end
                                 counter1.finishTime = customer(i).serviceTime + customer(i).serviceBegin;
-                                customer(i).serviceEnd = counter1.finishTime;    
-                        else
-                            if(customer(i).arrival > counter2.finishTime)
-                                customer(i).serviceBegin =  customer(i).arrival;
-                                customer(i).waitingTime = 0;
+                                customer(i).serviceEnd = counter1.finishTime;
+
                             else
-                                customer(i).serviceBegin =  counter2.finishTime;
-                                customer(i).waitingTime = customer(i).serviceEnd - customer(i).arrival;
-                            end
-                                counter2.finishTime = customer(i).serviceTime + customer(i).serviceBegin;
-                                customer(i).serviceEnd = counter2.finishTime;            
+                                %Additive Generator
+                                if(rngType == 1)
+                                    customer(i).rng = RNG(0,c,customer(i-1).rng);
+                                    customer(i).interArrival = interArrival(RNG(0,c,customer(i).rng));
+                                    customer(i).serviceTime = serviceTime(RNG(0,c,customer(i).rng,2));
+                                end
+
+                                %Multiplicative Generator
+                                if(rngType == 2)
+                                    customer(i).rng = RNG(a,0,customer(i-1).rng);
+                                    customer(i).interArrival = interArrival(RNG(a,0,customer(i).rng));
+                                    customer(i).serviceTime = serviceTime(RNG(a,0,customer(i).rng,2));
+                                end
+
+                                %Mixed Generator
+                                if(rngType == 3)
+                            customer(i).rng = RNG(a,c,customer(i-1).rng);
+                            customer(i).interArrival = interArrival(RNG(a,c,customer(i).rng));
+                            customer(i).serviceTime = serviceTime(RNG(a,c,customer(i).rng,2));
                         end
-                    
+                        customer(i).arrival = customer(i).interArrival + customer(i-1).arrival;
+                        if(customer(i).arrival > counter2.finishTime)
+                            customer(i).serviceBegin =  customer(i).arrival;
+                            customer(i).waitingTime = 0;
+                        else
+                            customer(i).serviceBegin =  counter2.finishTime;
+                            customer(i).waitingTime = customer(i).serviceEnd - customer(i).arrival;
+                        end
+                            counter2.finishTime = customer(i).serviceTime + customer(i).serviceBegin;
+                            customer(i).serviceEnd = counter2.finishTime;
+                    end
                 end
             end
         end
