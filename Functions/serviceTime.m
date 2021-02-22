@@ -2,11 +2,11 @@ function serviceTime = serviceTime(rng,counter)
     if(counter == 1)
         if(rng > 80)
             time = 50;
-        else if(rng > 55)
+        elseif(rng > 55)
             time = 40;
-        else if(rng > 25)
+        elseif(rng > 25)
             time = 30;
-        else if(rng > 10)
+        elseif(rng > 10)
             time = 20;
         else
             time = 10;
@@ -15,11 +15,11 @@ function serviceTime = serviceTime(rng,counter)
     if(counter == 2)
         if(rng > 85)
             time = 35;
-        else if(rng > 65)
+        elseif(rng > 65)
             time = 30;
-        else if(rng > 40)
+        elseif(rng > 40)
             time = 25;
-        else if(rng > 15)
+        elseif(rng > 15)
             time = 20;
         else
             time = 15;
