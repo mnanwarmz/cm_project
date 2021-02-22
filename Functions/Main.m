@@ -31,36 +31,69 @@ function Main()
             customer(i).serviceTime = serviceTime(initialRNG);
             customer(i).serviceEnd = customer(i).arrival + customer(i).serviceTime;
             else
-                if(counter1 == 0 || counter2 == 0)
+                if(counter1 == 0)
+                    counter1 = 1;
                     %Additive Generator
                     if(rngType == 1)
                         customer(i).rng = RNG(0,c,customer(i-1).rng);
                         customer(i).interArrival = interArrival(RNG(0,c,customer(i).rng));
-                        customer(i).arrival = customer(i).interArrival + customer(i-1).arrival;
                         customer(i).serviceTime = serviceTime(RNG(0,c,customer(i).rng));
-                        customer(i).waitingTime = customer(i).serviceBegin - customer(i).timeEnteringCounter;
                     end
 
                     %Multiplicative Generator
                     if(rngType == 2)
                         customer(i).rng = RNG(a,0,customer(i-1).rng);
                         customer(i).interArrival = interArrival(RNG(a,0,customer(i).rng));
-                        customer(i).arrival = customer(i).interArrival + customer(i-1).arrival;
                         customer(i).serviceTime = serviceTime(RNG(a,0,customer(i).rng));
-                        customer(i).waitingTime = customer(i).serviceBegin - customer(i).timeEnteringCounter;
                     end
 
                     %Mixed Generator
                     if(rngType == 3)
                         customer(i).rng = RNG(a,c,customer(i-1).rng);
                         customer(i).interArrival = interArrival(RNG(a,c,customer(i).rng));
-                        customer(i).arrival = customer(i).interArrival + customer(i-1).arrival;
                         customer(i).serviceTime = serviceTime(RNG(a,c,customer(i).rng));
-                        customer(i).waitingTime = customer(i).serviceBegin - customer(i).timeEnteringCounter;
                     end
+                    customer(i).arrival = customer(i).interArrival + customer(i-1).arrival;
+                    customer(i).serviceBegin = customer(i-1).serviceEnds;
+                    customer(i).serviceEnds = customer(i).serviceBegin + customer(i).serviceTime;
+                    customer(i).waitingTime = customer(i).serviceEnds - customer(i).arrival;
+
+
+                elseif(counter2 == 0)
+                    counter2 = 1;
+                    %Additive Generator
+                    if(rngType == 1)
+                        customer(i).rng = RNG(0,c,customer(i-1).rng);
+                        customer(i).interArrival = interArrival(RNG(0,c,customer(i).rng));
+                        customer(i).serviceTime = serviceTime(RNG(0,c,customer(i).rng));
+                    end
+
+                    %Multiplicative Generator
+                    if(rngType == 2)
+                        customer(i).rng = RNG(a,0,customer(i-1).rng);
+                        customer(i).interArrival = interArrival(RNG(a,0,customer(i).rng));
+                        customer(i).serviceTime = serviceTime(RNG(a,0,customer(i).rng));
+                    end
+
+                    %Mixed Generator
+                    if(rngType == 3)
+                        customer(i).rng = RNG(a,c,customer(i-1).rng);
+                        customer(i).interArrival = interArrival(RNG(a,c,customer(i).rng));
+                        customer(i).serviceTime = serviceTime(RNG(a,c,customer(i).rng));
+                    end
+                    customer(i).arrival = customer(i).interArrival + customer(i-1).arrival;
+                    customer(i).serviceBegin = customer(i-1).serviceEnds;
+                    customer(i).serviceEnds = customer(i).serviceBegin + customer(i).serviceTime;
+                    customer(i).waitingTime = customer(i).serviceEnds - customer(i).arrival;
+
+                else
+                    if(customer(i).)
+                    %customer(i).waitingTime =
+                    customer(i).serviceBegin = customer(i-1).serviceEnds + customer(i).waitingTime;
                 end
             end
         end
     end
+
 
     maxCustomerCount = input('Enter the limit for the amount of customers available at one time in the centre : \n');
